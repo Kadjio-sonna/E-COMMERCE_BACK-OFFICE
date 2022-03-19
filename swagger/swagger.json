@@ -14,26 +14,29 @@
   "basePath": "",
   "tags": [
     {
-      "name": "Users",
+      "name": "User",
       "description": "API for Users in the system"
+    },
+    {
+      "name": "Product",
+      "description": "API for Products in the system"
+    },
+    {
+      "name": "Order",
+      "description": "API for Orders in the system"
+    },
+    {
+      "name": "Cart",
+      "description": "API for Carts in the system"
     }
   ],
-  "schemes": [
-    "http",
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
-    "/users": {
+    "/api/v1/users": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get all users in systeme",
         "responses": {
           "200": {
@@ -44,14 +47,142 @@
           }
         }
       }
+    },
+    "/api/v1/user/find/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get one user in systeme with given ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the User with want to see information",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Failed. Cat not found."
+          },
+          "500": {
+            "description": "Failed. Internal Server Error."
+          }
+        }
+      }
+    },
+    "/api/v1/user/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new user in systeme",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post."
+          },
+          "500": {
+            "description": "Failed. Internal Server Error."
+          }
+        }
+      }
+    },
+    "/api/v1/user/{id}": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Update user in systeme with given ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the User with want to update",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "User with new values want to update",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Failed. Internal Server Error."
+          }
+        }
+      }
+    },
+    "/api/v1/user/{id}": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete one user in systeme with given ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the User with want to delete information",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "401": {
+            "description": "Failed. Cat not found."
+          },
+          "500": {
+            "description": "Failed. Internal Server Error."
+          }
+        }
+      }
     }
   },
   "definitions": {
-    "User": {
+    "id": {
       "properties": {
         "uuid": {
           "type": "string"
-        },
+        }
+      }
+    },
+    "User": {
+      "properties": {
         "username": {
           "type": "string"
         },
@@ -71,9 +202,6 @@
     },
     "Product": {
       "properties": {
-        "uuid": {
-          "type": "string"
-        },
         "title": {
           "type": "string"
         },
