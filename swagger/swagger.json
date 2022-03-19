@@ -108,6 +108,45 @@
         }
       }
     },
+    "/api/v1/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login a user in systeme",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "User that we want to login",
+            "schema": {
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post."
+          },
+          "500": {
+            "description": "Failed. Internal Server Error."
+          }
+        }
+      }
+    },
+
     "/api/v1/user/{id}": {
       "put": {
         "tags": ["User"],
