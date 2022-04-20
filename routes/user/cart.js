@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
-const orderCtrl = require("../controllers/order")
-
+const cartCtrl = require("../../controllers/cart")
 
 module.exports = router;

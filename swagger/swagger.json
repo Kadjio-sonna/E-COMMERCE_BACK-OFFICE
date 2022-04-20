@@ -34,49 +34,6 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
-    "/api/v1/users": {
-      "get": {
-        "tags": ["User"],
-        "summary": "Get all users in systeme",
-        "responses": {
-          "200": {
-            "description": "ok",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/user/find/{id}": {
-      "get": {
-        "tags": ["User"],
-        "summary": "Get one user in systeme with given ID",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "ID of the User with want to see information",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "ok",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "401": {
-            "description": "Failed. Cat not found."
-          },
-          "500": {
-            "description": "Failed. Internal Server Error."
-          }
-        }
-      }
-    },
     "/api/v1/user/register": {
       "post": {
         "tags": ["User"],
@@ -146,7 +103,49 @@
         }
       }
     },
-
+    "/api/v1/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all users in systeme",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/find/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get one user in systeme with given ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the User with want to see information",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Failed. Cat not found."
+          },
+          "500": {
+            "description": "Failed. Internal Server Error."
+          }
+        }
+      }
+    },
     "/api/v1/user/{id}": {
       "put": {
         "tags": ["User"],

@@ -8,8 +8,12 @@ const dotenv = require("dotenv");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require('./swagger/swagger.json');
 
-const authRoutes = require("./routes/auth")
-const userRoutes = require("./routes/user")
+// Import Utilisateur
+const authRoutes = require("./routes/user/auth")
+const userRoutes = require("./routes/user/user")
+
+// Import Administrateur
+const adminRoutes = require("./routes/admin/admin")
 
 const app = express();
 dotenv.config(); // Permet de charger les variables environnement venant du fichier .env
@@ -42,10 +46,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Set template engine EJS
+app.set('view engine', 'ejs');
+
+// appel des routes de l'utilisateur
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", userRoutes);
+
+// appel des routes de l'administrateur
+app.use("/", adminRoutes);
 
 app.use((req, res, next) => {
     res.send("Backend server on port running");
 });
+
 module.exports = app;
