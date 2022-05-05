@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 // const bcrypt = require("bcrypt");
 
-const userCtrl = require("../../controllers/user")
+const userCtrl = require("../../controllers/user/user")
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../verifyToken")
 
 router.put("/user/:id", verifyTokenAndAuthorization, userCtrl.updateUser)

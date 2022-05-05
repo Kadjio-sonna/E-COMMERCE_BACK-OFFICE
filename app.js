@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const session = require('express-session');
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -8,12 +9,13 @@ const dotenv = require("dotenv");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require('./swagger/swagger.json');
 
-// Import Utilisateur
+// Import route Utilisateur
 const authRoutes = require("./routes/user/auth")
 const userRoutes = require("./routes/user/user")
 
-// Import Administrateur
+// Import route Administrateur
 const adminRoutes = require("./routes/admin/admin")
+const authAdminRoutes = require("./routes/admin/auth")
 
 const app = express();
 dotenv.config(); // Permet de charger les variables environnement venant du fichier .env
@@ -46,18 +48,35 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Session
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true }
+}));
+
+app.use((req, res, next) => {
+    res.locals.message = req.session.message
+    delete req.session.message
+    next()
+})
+
 // Set template engine EJS
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/views'));
+// app.set("views", path.join(__dirname, "/views"));
 
 // appel des routes de l'utilisateur
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", userRoutes);
 
 // appel des routes de l'administrateur
-app.use("/", adminRoutes);
+app.use("/dashboard", adminRoutes);
+app.use("/dashboard", authAdminRoutes);
 
-app.use((req, res, next) => {
-    res.send("Backend server on port running");
-});
+// app.use((req, res, next) => {
+//     res.send("Backend server on port running");
+// });
 
 module.exports = app;

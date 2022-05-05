@@ -1,7 +1,7 @@
 const CryptoJS = require("crypto-js");
 var jwt = require("jsonwebtoken");
 
-const { User } = require("../models/User");
+const { User } = require("../../models/User");
 
 // REGISTER USER
 exports.createUser = async (req, res) => {
