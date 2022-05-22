@@ -34,7 +34,7 @@ exports.loginUser = async (req, res) => {
 
         const hashedPassword = CryptoJS.AES.decrypt(
             user.password,
-            process.env.PASSWORD_SECRET
+            process.env.PASSWORD_SECRETs
         );
 
         const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);

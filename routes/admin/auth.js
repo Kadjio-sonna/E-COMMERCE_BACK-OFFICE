@@ -9,6 +9,7 @@ const {
     verifyTokenAndAdmin,
 } = require("../verifyToken");
 
+
 // Register
 router.get("/register", (req, res) => {
     res.render("register", { title: "Register page" });
@@ -21,13 +22,18 @@ router.get("/login", (req, res) => {
     res.render("login", { title: "Login page" });
 });
 
-router.post("/login", (req, res) => {
-    res.redirect("/users");
-});
+router.post("/login", authCtrl.loginAdmin);
 
 // Opt code
-router.get("/verification-code", (req, res) => {
-    res.render("code", { title: "Code page" });
+router.get("/verification-code/:userId", (req, res) => {
+    res.render("code", { title: "Code page", userId: req.params.userId });
+});
+
+router.post("/verification-code/:userId", authCtrl.verificationCode);
+
+// 404
+router.get("*", (req, res) => {
+    res.render("404", { title: "404 page"});
 });
 
 module.exports = router;
